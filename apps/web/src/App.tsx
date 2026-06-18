@@ -1,122 +1,104 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import React from 'react';
+import Navbar from './components/Navbar';
+import PropertyCard from './components/PropertyCard';
+import { Search, SlidersHorizontal } from 'lucide-react';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: React.FC = () => {
+  const properties = [
+    {
+      price: 2450,
+      title: 'Modern Loft in Downtown',
+      location: '123 Market St, San Francisco, CA',
+      image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80',
+      beds: 2,
+      baths: 1,
+      sqft: 850,
+      rating: 4.9,
+      isVerified: true
+    },
+    {
+      price: 1800,
+      title: 'Cozy Studio in Brooklyn',
+      location: '456 Pine Ave, Brooklyn, NY',
+      image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80',
+      beds: 1,
+      baths: 1,
+      sqft: 500,
+      rating: 4.7,
+      isNew: true
+    },
+    {
+      price: 3200,
+      title: 'Luxury Condo in Austin',
+      location: '789 Congress Ave, Austin, TX',
+      image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80',
+      beds: 3,
+      baths: 2,
+      sqft: 1200,
+      rating: 5.0,
+      isFeatured: true
+    }
+  ];
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="min-h-screen bg-background flex flex-col">
+      <Navbar />
+      
+      <main className="flex-grow">
+        {/* Hero Section */}
+        <section className="px-4 py-12 md:py-20 max-w-6xl mx-auto">
+          <div className="text-center mb-10">
+            <h1 className="text-4xl md:text-5xl font-bold text-neutral-text mb-4">Find your next home with ease.</h1>
+            <p className="text-neutral-subtext text-lg max-w-2xl mx-auto">Verified listings, digital applications, and real-time messaging. All in one place.</p>
+          </div>
 
-      <div className="ticks"></div>
+          {/* Search Bar */}
+          <div className="bg-white p-2 rounded-full shadow-lg flex items-center max-w-3xl mx-auto border">
+            <div className="flex-1 flex items-center px-4">
+              <Search className="text-neutral-subtext mr-2" size={20} />
+              <input type="text" placeholder="Where do you want to live?" className="w-full outline-none text-lg" />
+            </div>
+            <button className="bg-primary text-white px-8 py-3 rounded-full font-bold shadow-md hover:opacity-90 transition">Search</button>
+          </div>
+        </section>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+        {/* Listings Section */}
+        <section className="px-4 pb-20 max-w-6xl mx-auto">
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-2xl font-bold text-neutral-text">Popular Listings</h2>
+            <button className="flex items-center space-x-2 border px-4 py-2 rounded-lg hover:bg-gray-50 transition">
+              <SlidersHorizontal size={20} className="text-neutral-subtext" />
+              <span className="font-medium">Filters</span>
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {properties.map((prop, index) => (
+              <PropertyCard key={index} {...prop} />
+            ))}
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-white border-t px-4 py-12">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
+          <div className="flex items-center space-x-2 mb-4 md:mb-0">
+            <div className="bg-primary w-6 h-6 rounded flex items-center justify-center">
+              <span className="text-white text-xs font-bold">R</span>
+            </div>
+            <span className="text-lg font-bold text-neutral-text">RentEase</span>
+          </div>
+          <div className="flex space-x-8 text-sm text-neutral-subtext">
+            <a href="#" className="hover:text-neutral-text">Terms</a>
+            <a href="#" className="hover:text-neutral-text">Privacy</a>
+            <a href="#" className="hover:text-neutral-text">Contact</a>
+            <a href="#" className="hover:text-neutral-text">Landlords</a>
+          </div>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      </footer>
+    </div>
+  );
+};
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
-}
-
-export default App
+export default App;
