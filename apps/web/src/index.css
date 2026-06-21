@@ -1,6 +1,16 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #3B82F6;
+  --color-secondary: #10B981;
+  --color-neutral-text: #1F2937;
+  --color-neutral-subtext: #6B7280;
+  --color-background: #F9FAFB;
+  --color-surface: #FFFFFF;
+  --color-accent: #F59E0B;
+  
+  --font-family-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
 
 body {
   @apply bg-background font-sans text-neutral-text;
