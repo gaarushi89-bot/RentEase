@@ -33,7 +33,7 @@ export interface Property {
   featuredUntil?: string;
   createdAt: string;
   updatedAt: string;
-  images: PropertyImage[];
+  images?: PropertyImage[];
 }
 
 export interface PropertyImage {
@@ -42,6 +42,7 @@ export interface PropertyImage {
   url: string;
   altText?: string;
   sortOrder: number;
+  createdAt: string;
 }
 
 export interface Application {
@@ -81,6 +82,51 @@ export interface Review {
   updatedAt: string;
 }
 
+export interface SubscriptionPlan {
+  id: string;
+  name: string;
+  description: string;
+  priceMonthly: number;
+  maxListings: number;
+  hasFeatured: boolean;
+  hasVerifiedBadge: boolean;
+  hasAnalytics: boolean;
+  hasPrioritySupport: boolean;
+  createdAt: string;
+}
+
+export interface Subscription {
+  id: string;
+  userId: string;
+  planId: string;
+  status: 'active' | 'canceled' | 'past_due' | 'expired' | 'trialing';
+  currentPeriodStart: string;
+  currentPeriodEnd: string;
+  canceledAt?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Transaction {
+  id: string;
+  userId: string;
+  subscriptionId?: string;
+  amount: number;
+  currency: string;
+  description: string;
+  category: 'subscription' | 'featured_listing' | 'verified_badge' | 'priority_leads' | 'advertising';
+  status: 'pending' | 'completed' | 'failed' | 'refunded';
+  stripePaymentId?: string;
+  createdAt: string;
+}
+
+export interface Favorite {
+  id: string;
+  userId: string;
+  propertyId: string;
+  createdAt: string;
+}
+
 export interface SearchFilters {
   location?: string;
   minPrice?: number;
@@ -88,31 +134,4 @@ export interface SearchFilters {
   propertyType?: string;
   bedrooms?: number;
   bathrooms?: number;
-}
-
-export interface Message {
-  id: string;
-  senderId: string;
-  receiverId: string;
-  propertyId?: string;
-  content: string;
-  createdAt: Date;
-  readAt?: Date;
-}
-
-export interface Review {
-  id: string;
-  propertyId: string;
-  tenantId: string;
-  rating: number;
-  comment: string;
-  createdAt: Date;
-}
-
-export interface Subscription {
-  id: string;
-  landlordId: string;
-  plan: 'starter' | 'professional' | 'business';
-  status: 'active' | 'cancelled' | 'expired';
-  expiresAt: Date;
 }
