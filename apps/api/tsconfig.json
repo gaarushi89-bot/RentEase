@@ -12,7 +12,10 @@
     "isolatedModules": true,
     "moduleDetection": "force",
     "declaration": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "declarationMap": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "../../packages/shared/src/**/*"]
 }
