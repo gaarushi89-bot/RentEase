@@ -1,6 +1,8 @@
 import type { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import type { User } from '../../../../packages/shared/src/index.js';
+import type { AuthRequest } from '../middleware/auth.js';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 const JWT_EXPIRES_IN = '1d';
@@ -22,15 +24,19 @@ export const register = async (req: Request, res: Response) => {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  const newUser = {
+  const newUser: User = {
     id: Math.random().toString(36).substring(7),
     email,
-    password: hashedPassword,
     name,
-    role
+    role,
+    emailVerified: false,
+    isVerifiedLandlord: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   };
 
-  users.push(newUser);
+  // Store password separately as it's not in the User interface
+  users.push({ ...newUser, password: hashedPassword });
 
   const token = jwt.sign(
     { id: newUser.id, email: newUser.email, role: newUser.role },
@@ -40,12 +46,7 @@ export const register = async (req: Request, res: Response) => {
 
   res.status(201).json({
     token,
-    user: {
-      id: newUser.id,
-      email: newUser.email,
-      name: newUser.name,
-      role: newUser.role
-    }
+    user: newUser
   });
 };
 
@@ -78,11 +79,15 @@ export const login = async (req: Request, res: Response) => {
       id: user.id,
       email: user.email,
       name: user.name,
-      role: user.role
+      role: user.role,
+      emailVerified: user.emailVerified,
+      isVerifiedLandlord: user.isVerifiedLandlord,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt
     }
   });
 };
 
-export const getMe = async (req: any, res: Response) => {
+export const getMe = async (req: AuthRequest, res: Response) => {
   res.json({ user: req.user });
 };
