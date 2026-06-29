@@ -89,3 +89,30 @@ export interface SearchFilters {
   bedrooms?: number;
   bathrooms?: number;
 }
+
+export interface Message {
+  id: string;
+  senderId: string;
+  receiverId: string;
+  propertyId?: string;
+  content: string;
+  createdAt: Date;
+  readAt?: Date;
+}
+
+export interface Review {
+  id: string;
+  propertyId: string;
+  tenantId: string;
+  rating: number;
+  comment: string;
+  createdAt: Date;
+}
+
+export interface Subscription {
+  id: string;
+  landlordId: string;
+  plan: 'starter' | 'professional' | 'business';
+  status: 'active' | 'cancelled' | 'expired';
+  expiresAt: Date;
+}
